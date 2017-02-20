@@ -1,24 +1,19 @@
 class CommentsController < ApplicationController
-  def index
-    @comment = Comment.all
-  end
-
-  def new
-    @comment = Comment.new
-  end
+  before_action :check_current_user, only: [:new, :create, :edit, :update, :destroy]
 
   def create
-    @article = Article.find(params[:article_id])
-    @comment = Comments.build(params[:comment])
-    @comment.article_id = @article.id
-    if @comment.save
-      flash[:success] = "Comment created!"
-      redirect_to '/contact'
-    else
-      render '/about'
-    end
+      respond_to do |format|
+          @comment = Comment.new(params_comment)
+          if @comment.save
+              format.js {@comments = Article.find_by_id(params[:comment][:article_id]).comments.order("id desc")}
+          else
+              format.js {@article = Article.find_by_id(params[:comment][:article_id])}
+          end
+      end
   end
 
-  def edit
-  end
+  private
+      def params_comment
+          params.require(:comment).permit(:article_id, :user_id, :content, :status)
+      end
 end

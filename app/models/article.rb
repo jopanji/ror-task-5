@@ -4,7 +4,7 @@ class Article < ActiveRecord::Base
     validates :status, presence: true
 
     #name relation must plural
-    #has_many :comments, dependent: :destroy
+    has_many :comments, dependent: :destroy
     
     default_scope {where(status: 'active')}
 end

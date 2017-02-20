@@ -1,3 +1,11 @@
+<h4>
+<% if !current_user %>
+<%= link_to 'Log-in', new_session_path %>
+<% else %>
+Hello <%= current_user.username %>
+<%= link_to 'Log-Out', session_path(current_user.id), method: "DELETE" %>
+<% end %>
+</h4>
 <% @articles.each do |article| %>
 <h3><%= article.title %></h3>
 <h4><%= article.created_at.to_s %></h4>
