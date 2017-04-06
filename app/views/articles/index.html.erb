@@ -5,6 +5,7 @@
 Hello <%= current_user.username %>
 <%= link_to 'Log-Out', session_path(current_user.id), method: "DELETE" %>
 <% end %>
+<%=  link_to 'Export', eksport_path({:format => :xls}) %>
 </h4>
 <% @articles.each do |article| %>
 <h3><%= article.title %></h3>
@@ -20,4 +21,10 @@ Hello <%= current_user.username %>
 <span><%= link_to 'delete', article_path(article.id), method: "DELETE", data: {confirm: 'Delete this data ? '} %><span>
 </p>
 <hr/>
+
+<%= form_tag import_articles_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
 <% end %>

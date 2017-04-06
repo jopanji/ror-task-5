@@ -1,6 +1,12 @@
 source 'https://rubygems.org'
 
 
+gem 'spreadsheet', '>= 0.9.0'
+gem 'to_xls'
+gem "iconv", "~> 1.0.3"
+gem 'roo'
+gem 'active_importer'
+gem 'roo-xls'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
 # Use mysql as the database for Active Record

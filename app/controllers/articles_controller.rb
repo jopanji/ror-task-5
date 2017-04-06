@@ -53,6 +53,22 @@ class ArticlesController < ApplicationController
         end
     end
 
+    def export
+
+        @articles = Article.all
+            respond_to do |format|
+            format.html
+            format.xml { render :xml => @articles }
+            format.xls { send_data @articles.to_xls, :filename => 'articles.xls' }
+    end
+  end
+
+    def import
+
+        Article.import(params[:file])
+        redirect_to root_path, notice: "Article imported"
+    end
+    
     private
     def params_article
         params.require(:article).permit(:title, :content, :status)

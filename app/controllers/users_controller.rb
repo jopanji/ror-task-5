@@ -1,6 +1,15 @@
 class UsersController < ApplicationController
   def index
+   @users = User.all
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @users }
+      format.xls { send_data @users.to_xls, :filename => 'users.xls' }
+    
   end
+  end
+end
 
   def new
     @user = User.new
@@ -27,6 +36,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(:username, :email, :password, :password_confirmation, :humanizer_answer, :humanizer_question_id)
   end
 
-  def edit
-  end
-end
+
+
+
